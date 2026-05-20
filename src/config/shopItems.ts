@@ -49,8 +49,19 @@ export function getShopItem(id: string): ShopItem | undefined {
   return SHOP_ITEMS.find((i) => i.id === id);
 }
 
-// The shop is closed until SHOP_OPEN is explicitly set to "true".
-// Set it in .env.local and in Vercel when the shop is ready to go live.
+import { isShopTimeReached } from "@/lib/betTiming";
+
+// The shop opens only when BOTH are true:
+//   1. SHOP_OPEN flag is "true" (Zoë's "products are ready" switch)
+//   2. the SHOP_OPENS_AT timestamp has passed
+// So the flag can be set true now and the shop still opens itself on the day.
 export function isShopOpen(): boolean {
+  const flagOn = process.env.NEXT_PUBLIC_SHOP_OPEN === "true";
+  return flagOn && isShopTimeReached();
+}
+
+// Whether the flag is on, regardless of time. Used to show the right
+// "opens at the party" vs "not yet" message.
+export function isShopFlagOn(): boolean {
   return process.env.NEXT_PUBLIC_SHOP_OPEN === "true";
 }
