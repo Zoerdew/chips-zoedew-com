@@ -3,8 +3,11 @@ import {
   createBetParticipant,
   createChipEvent,
   findBetParticipantByEmail,
+  findBetParticipantById,
   findBetParticipantByReferralCode,
+  updateBetParticipant,
 } from "@/lib/airtable";
+import { env } from "@/lib/env";
 
 export const runtime = "nodejs";
 
@@ -95,14 +98,42 @@ export async function POST(req: Request) {
     });
   }
 
+  // The Referral Code is an Airtable formula, computed from the record id.
+  // It may not be present in the create response, so re-fetch the record.
+  let referralCode = created.fields["Referral Code"] ?? "";
+  let referralLink = created.fields["Referral Link"] ?? "";
+  if (!referralCode) {
+    const refreshed = await findBetParticipantById(created.id);
+    referralCode = refreshed?.fields["Referral Code"] ?? "";
+    referralLink = refreshed?.fields["Referral Link"] ?? "";
+  }
+
+  // Write the personalised share image into the Share Image attachment field.
+  // Airtable fetches the URL and stores the PNG. Non-blocking: registration
+  // must still succeed if this fails.
+  if (referralCode) {
+    const shareImageUrl = `${env.siteUrl}/api/share-image?name=${encodeURIComponent(
+      firstName
+    )}&ref=${encodeURIComponent(referralCode)}`;
+    try {
+      await updateBetParticipant(created.id, {
+        "Share Image": [
+          { url: shareImageUrl, filename: `100-minute-bet-${firstName}.png` },
+        ],
+      });
+    } catch (err) {
+      console.error("Failed to set Share Image attachment:", err);
+    }
+  }
+
   return NextResponse.json({
     ok: true,
     alreadyRegistered: false,
     participant: {
       id: created.id,
       firstName,
-      referralCode: created.fields["Referral Code"] ?? "",
-      referralLink: created.fields["Referral Link"] ?? "",
+      referralCode,
+      referralLink,
     },
   });
 }
