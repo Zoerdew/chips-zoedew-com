@@ -8,6 +8,7 @@ import {
   updateBetParticipant,
 } from "@/lib/airtable";
 import { env } from "@/lib/env";
+import { isLandingPublic } from "@/lib/betTiming";
 
 export const runtime = "nodejs";
 
@@ -30,6 +31,21 @@ function isEmail(value: string): boolean {
 }
 
 export async function POST(req: Request) {
+  // Gate: before the landing page is public, refuse signups outright.
+  // The holding page has no form, so this only fires on direct POSTs.
+  if (!isLandingPublic()) {
+    return NextResponse.json(
+      {
+        ok: false,
+        error: {
+          field: "form",
+          message: "The doors aren't open yet. Come back on 8 June.",
+        },
+      },
+      { status: 503 }
+    );
+  }
+
   let body: RegisterBody;
   try {
     body = (await req.json()) as RegisterBody;

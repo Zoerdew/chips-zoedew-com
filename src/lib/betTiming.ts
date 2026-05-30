@@ -1,6 +1,8 @@
 // Bet timing. NEXT_PUBLIC_ vars are inlined at build time, so this module
 // works in both server components and client components.
 
+const LANDING_OPENS_AT =
+  process.env.NEXT_PUBLIC_LANDING_OPENS_AT ?? "2026-06-08T00:00:00+01:00";
 const BET_OPENS_AT =
   process.env.NEXT_PUBLIC_BET_OPENS_AT ?? "2026-06-22T00:00:00+01:00";
 const LOGGING_CLOSES_AT =
@@ -14,12 +16,20 @@ const SHOP_OPENS_AT =
   process.env.NEXT_PUBLIC_SHOP_OPENS_AT ?? "2026-06-29T19:00:00+01:00";
 
 export const betTiming = {
+  landingOpensAt: new Date(LANDING_OPENS_AT),
   opensAt: new Date(BET_OPENS_AT),
   loggingClosesAt: new Date(LOGGING_CLOSES_AT),
   partyOpensAt: new Date(PARTY_OPENS_AT),
   fruitMachineUnlocksAt: new Date(FRUIT_MACHINE_UNLOCKS_AT),
   shopOpensAt: new Date(SHOP_OPENS_AT),
 };
+
+// Whether the public landing page (and registration) is live.
+// Before this, chips.zoedew.com shows the holding page and the register
+// API returns a 503. Override on Vercel by setting NEXT_PUBLIC_LANDING_OPENS_AT.
+export function isLandingPublic(now: Date = new Date()): boolean {
+  return now >= betTiming.landingOpensAt;
+}
 
 export type BetPhase = "before" | "open" | "logging-closed";
 
@@ -50,6 +60,7 @@ export function isShopTimeReached(now: Date = new Date()): boolean {
 
 // ISO strings for passing to client components without serialising Date objects.
 export const betTimingISO = {
+  landingOpensAt: betTiming.landingOpensAt.toISOString(),
   opensAt: betTiming.opensAt.toISOString(),
   loggingClosesAt: betTiming.loggingClosesAt.toISOString(),
   partyOpensAt: betTiming.partyOpensAt.toISOString(),
