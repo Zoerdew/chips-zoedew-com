@@ -132,26 +132,11 @@ export function HoldingPage({ opensAtISO }: Props) {
         <div className="fog-layer fog-layer--a" aria-hidden />
         <div className="fog-layer fog-layer--b" aria-hidden />
 
-        {/* Boarded up: three wooden planks nailed diagonally across the
-            sign. Pink neon still glows through the gaps. */}
-        <div className="planks" aria-hidden>
-          <div className="plank plank--1">
-            <span className="nail nail--left" />
-            <span className="nail nail--right" />
-          </div>
-          <div className="plank plank--2">
-            <span className="nail nail--left" />
-            <span className="nail nail--right" />
-          </div>
-          <div className="plank plank--3">
-            <span className="nail nail--left" />
-            <span className="nail nail--right" />
-          </div>
-          {/* Spray-painted COMING SOON stamp over the planks */}
-          <div className="plank-stamp">
-            <div className="plank-stamp-top">COMING</div>
-            <div className="plank-stamp-bottom">8 JUNE</div>
-          </div>
+        {/* Censor bar: solid hot-pink rectangle slapped across the middle
+            of the sign at a slight tilt. Top and bottom of the sign still
+            glow through above and below. */}
+        <div className="censor-bar" aria-label="Coming 8 June">
+          COMING 8 JUNE
         </div>
       </div>
 
@@ -396,9 +381,36 @@ export function HoldingPage({ opensAtISO }: Props) {
           }
         }
 
-        /* Boarded-up planks. Three thick wooden planks nailed diagonally
-           across the sign at slight angle variation, with gaps between so
-           the pink neon glows through. Slight wood-grain via gradients. */
+        /* Censor bar: solid hot pink across the middle, slight tilt.
+           Sits on top of the sign photo, lets the top and bottom of the
+           sign glow through above and below. */
+        .censor-bar {
+          position: absolute;
+          top: 42%;
+          left: -4%;
+          right: -4%;
+          height: 21%;
+          background: var(--pink);
+          transform: rotate(-2.4deg);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: var(--paper);
+          font-family: var(--font-bricolage), sans-serif;
+          font-weight: 800;
+          font-size: clamp(22px, 4.8vw, 64px);
+          letter-spacing: 0.16em;
+          text-transform: uppercase;
+          line-height: 1;
+          border-top: 2px solid rgba(0, 0, 0, 0.18);
+          border-bottom: 2px solid rgba(0, 0, 0, 0.45);
+          box-shadow:
+            0 8px 28px rgba(0, 0, 0, 0.55),
+            0 0 40px rgba(241, 23, 135, 0.55);
+        }
+
+        /* Boarded-up planks (kept in CSS file in case we want to bring
+           them back, but no longer rendered in the JSX). */
         .planks {
           position: absolute;
           inset: 0;

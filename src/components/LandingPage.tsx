@@ -3,6 +3,9 @@ import { Marquee } from "@/components/Marquee";
 import { Sticker } from "@/components/Sticker";
 import { Band } from "@/components/Band";
 import { RegistrationForm } from "@/components/RegistrationForm";
+import { BouncingChips } from "@/components/BouncingChips";
+import { MiniFruitMachine } from "@/components/MiniFruitMachine";
+import { ScratchReveal } from "@/components/ScratchReveal";
 
 const MARQUEE_ITEMS = [
   "PLACE YOUR BET",
@@ -32,14 +35,30 @@ export function LandingPage() {
             <p className="band-sub">
               Place your bet. Log your reps. Cash your chips.
             </p>
-            <p className="band-sub" style={{ marginTop: -12 }}>
-              22 - 29 June 2026. Free to enter. Casino party live on Zoom on
-              Sunday 29 June. For online business owners who already know
-              what to do and haven&apos;t done it.
+            <div style={{ display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap", margin: "12px 0 18px" }}>
+              <ScratchReveal width={280} height={64} foilText="WHEN?">
+                <span style={{
+                  fontFamily: "var(--font-bricolage), sans-serif",
+                  fontWeight: 800,
+                  fontSize: 22,
+                  letterSpacing: "0.04em",
+                  textTransform: "uppercase",
+                }}>
+                  22 - 29 June 2026
+                </span>
+              </ScratchReveal>
+              <span style={{ fontSize: 14, opacity: 0.85 }}>
+                Free to enter. Casino party live on Zoom Sun 29 June.
+              </span>
+            </div>
+            <p className="band-sub" style={{ marginTop: 0 }}>
+              For online business owners who already know what to do and
+              haven&apos;t done it.
             </p>
             <a href="#get-in" className="btn">Take the bet →</a>
           </div>
-          <div>
+          <div style={{ position: "relative" }}>
+            <BouncingChips />
             <Image
               src="/icons/poker-stack.png"
               alt=""
@@ -50,6 +69,17 @@ export function LandingPage() {
             />
           </div>
         </div>
+      </Band>
+
+      {/* ---------- MINI FRUIT MACHINE ---------- */}
+      <Band color="paper" narrow>
+        <div style={{ textAlign: "center", marginBottom: 24 }}>
+          <span className="pill-badge">PEEK INSIDE</span>
+          <h2 className="text-h2" style={{ marginTop: 12 }}>
+            Pull the lever. See what you&apos;re betting on.
+          </h2>
+        </div>
+        <MiniFruitMachine />
       </Band>
 
       {/* ---------- THE LOOP ---------- */}
