@@ -3,10 +3,11 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 
 // Casino-sign holding page. Shows before NEXT_PUBLIC_LANDING_OPENS_AT.
-// No signup. Neon flicker. Live countdown to 8 June.
+// A big "WELCOME TO THE 100 MINUTE BET" neon sign, half-covered by a tilted
+// construction tarp, with individual letters flickering at different rhythms
+// like dying neon. No signup, no form.
 // Easter egg: type the letters c-h-i-p-s anywhere on the page to flip on a
-// secret message. Type it again to flip it off. Purely client-side, just for
-// fun, no backend, no auth.
+// secret message. Type it again to flip it off.
 
 type Props = {
   // ISO string for when the real landing page opens.
@@ -24,10 +25,19 @@ function diff(target: Date, now: Date) {
 
 const SECRET = "chips";
 
+// Sign content split into two lines, top covered by tarp, bottom visible.
+// Each letter gets its own flicker delay so the failures feel random.
+const LINE_TOP = "WELCOME TO THE";
+const LINE_BOTTOM = "100 MINUTE BET";
+
+// Which character indices in the bottom line flicker. Others stay solid.
+// Index counts spaces too.
+const FLICKER_INDICES_BOTTOM = new Set([0, 4, 7, 11, 13]);
+const FLICKER_INDICES_TOP = new Set([2, 6, 9, 12]);
+
 export function HoldingPage({ opensAtISO }: Props) {
   const target = useMemo(() => new Date(opensAtISO), [opensAtISO]);
 
-  // Avoid hydration mismatch: render placeholder until mounted.
   const [mounted, setMounted] = useState(false);
   const [now, setNow] = useState<Date>(() => new Date());
 
@@ -37,13 +47,12 @@ export function HoldingPage({ opensAtISO }: Props) {
     return () => clearInterval(id);
   }, []);
 
-  // Easter egg: capture the last few typed keys.
+  // Easter egg: capture last typed keys.
   const bufferRef = useRef("");
   const [secret, setSecret] = useState(false);
 
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
-      // Ignore typing inside inputs (none here, but be safe).
       const tag = (e.target as HTMLElement | null)?.tagName;
       if (tag === "INPUT" || tag === "TEXTAREA") return;
       if (e.key.length !== 1) return;
@@ -61,6 +70,22 @@ export function HoldingPage({ opensAtISO }: Props) {
 
   const t = mounted ? diff(target, now) : null;
 
+  function renderLetter(ch: string, i: number, flickerSet: Set<number>) {
+    if (ch === " ") return <span key={i}>&nbsp;&nbsp;</span>;
+    const flickers = flickerSet.has(i);
+    // Give each flickering letter a different delay so it looks chaotic.
+    const delay = `${(i * 0.37) % 4.2}s`;
+    return (
+      <span
+        key={i}
+        className={flickers ? "letter flicker" : "letter"}
+        style={flickers ? ({ animationDelay: delay } as React.CSSProperties) : undefined}
+      >
+        {ch}
+      </span>
+    );
+  }
+
   return (
     <main
       style={{
@@ -77,7 +102,7 @@ export function HoldingPage({ opensAtISO }: Props) {
         textAlign: "center",
       }}
     >
-      {/* Felt texture overlay */}
+      {/* Felt dot texture */}
       <div
         aria-hidden
         style={{
@@ -90,7 +115,7 @@ export function HoldingPage({ opensAtISO }: Props) {
         }}
       />
 
-      {/* Top tiny line */}
+      {/* Tiny top-of-page line */}
       <div
         style={{
           position: "relative",
@@ -99,50 +124,65 @@ export function HoldingPage({ opensAtISO }: Props) {
           textTransform: "uppercase",
           color: "var(--gold)",
           marginBottom: 24,
+          zIndex: 2,
         }}
       >
         chips.zoedew.com
       </div>
 
-      {/* The neon CHIPS sign */}
-      <h1
-        className="neon-sign"
-        style={{
-          position: "relative",
-          fontFamily: "var(--font-bricolage), sans-serif",
-          fontWeight: 800,
-          fontSize: "clamp(96px, 22vw, 280px)",
-          lineHeight: 0.9,
-          letterSpacing: "-0.04em",
-          margin: 0,
-        }}
-      >
-        CHIPS
-      </h1>
+      {/* THE SIGN: a frame containing two neon lines, with a tarp diagonally
+          covering the top half. */}
+      <div className="sign-wrap" style={{ position: "relative", zIndex: 1 }}>
+        <div className="sign">
+          <div className="sign-line sign-line--top" aria-label="WELCOME TO THE">
+            {LINE_TOP.split("").map((c, i) =>
+              renderLetter(c, i, FLICKER_INDICES_TOP)
+            )}
+          </div>
+          <div
+            className="sign-line sign-line--bottom"
+            aria-label="100 MINUTE BET"
+          >
+            {LINE_BOTTOM.split("").map((c, i) =>
+              renderLetter(c, i, FLICKER_INDICES_BOTTOM)
+            )}
+          </div>
+        </div>
+
+        {/* Tarp covering the top half. Tilted slightly. Ragged bottom edge. */}
+        <div className="tarp" aria-hidden>
+          <div className="tarp-stamp">PARDON OUR DUST</div>
+        </div>
+        {/* Bits of gaffer tape holding the tarp up */}
+        <div className="tape tape--left" aria-hidden />
+        <div className="tape tape--right" aria-hidden />
+      </div>
 
       <div
         style={{
           position: "relative",
-          marginTop: 8,
+          marginTop: 28,
           fontSize: 14,
           letterSpacing: "0.4em",
           textTransform: "uppercase",
           color: "var(--paper)",
           opacity: 0.9,
+          zIndex: 2,
         }}
       >
-        coming soon
+        the sign isn't finished yet
       </div>
 
       {/* Countdown */}
       <div
         style={{
           position: "relative",
-          marginTop: 48,
+          marginTop: 40,
           display: "flex",
           gap: 16,
           flexWrap: "wrap",
           justifyContent: "center",
+          zIndex: 2,
         }}
       >
         {[
@@ -190,34 +230,33 @@ export function HoldingPage({ opensAtISO }: Props) {
       <p
         style={{
           position: "relative",
-          marginTop: 40,
+          marginTop: 32,
           fontSize: 18,
           maxWidth: 540,
           color: "var(--paper)",
           opacity: 0.92,
+          zIndex: 2,
         }}
       >
-        Something is being built behind these doors. <br />
         The house opens on{" "}
         <strong style={{ color: "var(--yellow)" }}>8 June</strong>.
       </p>
 
-      {/* Tiny sign-off */}
       <div
         style={{
           position: "relative",
-          marginTop: 56,
+          marginTop: 48,
           fontSize: 11,
           letterSpacing: "0.3em",
           textTransform: "uppercase",
           color: "var(--paper)",
           opacity: 0.55,
+          zIndex: 2,
         }}
       >
         zoe dew &nbsp;&middot;&nbsp; falling forwards
       </div>
 
-      {/* The Easter egg. Only visible after the secret is typed. */}
       {secret ? (
         <div
           role="status"
@@ -245,31 +284,149 @@ export function HoldingPage({ opensAtISO }: Props) {
       ) : null}
 
       <style jsx>{`
-        .neon-sign {
+        .sign-wrap {
+          width: min(900px, 92vw);
+          padding: 28px 28px 36px;
+          border: 3px solid var(--gold);
+          border-radius: 16px;
+          background: rgba(0, 0, 0, 0.32);
+          box-shadow:
+            inset 0 0 60px rgba(0, 0, 0, 0.5),
+            0 12px 40px rgba(0, 0, 0, 0.5);
+        }
+        .sign {
+          font-family: var(--font-bricolage), sans-serif;
+          font-weight: 800;
+          line-height: 0.92;
+          letter-spacing: -0.02em;
+          color: var(--paper);
+        }
+        .sign-line--top {
+          font-size: clamp(36px, 7vw, 92px);
+          margin-bottom: 8px;
+        }
+        .sign-line--bottom {
+          font-size: clamp(60px, 13vw, 168px);
+        }
+        .letter {
+          display: inline-block;
           color: var(--paper);
           text-shadow:
             0 0 4px var(--paper),
             0 0 12px var(--pink),
             0 0 28px var(--pink),
-            0 0 60px var(--pink),
-            0 0 90px rgba(241, 23, 135, 0.65);
-          animation: flicker 5s infinite;
+            0 0 60px rgba(241, 23, 135, 0.75);
         }
-
-        @keyframes flicker {
-          0%, 18%, 22%, 25%, 53%, 57%, 100% {
+        .letter.flicker {
+          animation: flickerLetter 4.6s infinite;
+          will-change: opacity, text-shadow;
+        }
+        @keyframes flickerLetter {
+          0%, 92%, 100% {
             opacity: 1;
             text-shadow:
               0 0 4px var(--paper),
               0 0 12px var(--pink),
               0 0 28px var(--pink),
-              0 0 60px var(--pink),
-              0 0 90px rgba(241, 23, 135, 0.65);
+              0 0 60px rgba(241, 23, 135, 0.75);
           }
-          20%, 24%, 55% {
-            opacity: 0.45;
+          93%, 95% {
+            opacity: 0.18;
             text-shadow: none;
           }
+          94% {
+            opacity: 1;
+            text-shadow:
+              0 0 6px var(--paper),
+              0 0 18px var(--pink);
+          }
+          96%, 99% {
+            opacity: 0.25;
+            text-shadow: none;
+          }
+        }
+
+        /* Tarp covers the top portion of the sign. Slightly tilted.
+           Built from a striped warning-tape gradient + a darker base. */
+        .tarp {
+          position: absolute;
+          top: -22px;
+          left: -28px;
+          right: -28px;
+          height: 46%;
+          transform: rotate(-2.6deg);
+          background:
+            linear-gradient(
+              135deg,
+              rgba(0, 0, 0, 0.78),
+              rgba(0, 0, 0, 0.78)
+            ),
+            repeating-linear-gradient(
+              -45deg,
+              var(--yellow) 0 18px,
+              var(--ink) 18px 36px
+            );
+          background-blend-mode: multiply;
+          border-top: 4px solid var(--ink);
+          /* Ragged bottom edge using a pointy clip-path */
+          clip-path: polygon(
+            0% 0%,
+            100% 0%,
+            100% 86%,
+            96% 92%,
+            92% 84%,
+            88% 94%,
+            83% 86%,
+            78% 96%,
+            73% 86%,
+            68% 94%,
+            62% 86%,
+            56% 95%,
+            51% 86%,
+            46% 94%,
+            41% 86%,
+            36% 95%,
+            30% 86%,
+            24% 94%,
+            18% 86%,
+            12% 96%,
+            7% 86%,
+            3% 94%,
+            0% 88%
+          );
+          box-shadow: 0 8px 18px rgba(0, 0, 0, 0.6);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .tarp-stamp {
+          font-family: var(--font-bricolage), sans-serif;
+          font-weight: 800;
+          font-size: clamp(18px, 3.4vw, 38px);
+          letter-spacing: 0.18em;
+          color: var(--yellow);
+          text-transform: uppercase;
+          transform: rotate(2.6deg) translateY(-6px);
+          border: 3px dashed var(--yellow);
+          padding: 8px 18px;
+          background: rgba(0, 0, 0, 0.5);
+        }
+        .tape {
+          position: absolute;
+          top: -32px;
+          width: 80px;
+          height: 24px;
+          background: rgba(220, 220, 220, 0.75);
+          transform: rotate(-8deg);
+          opacity: 0.85;
+          mix-blend-mode: screen;
+        }
+        .tape--left {
+          left: 12%;
+        }
+        .tape--right {
+          right: 12%;
+          transform: rotate(8deg);
         }
       `}</style>
     </main>
