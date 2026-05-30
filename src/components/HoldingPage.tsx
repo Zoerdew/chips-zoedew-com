@@ -132,11 +132,27 @@ export function HoldingPage({ opensAtISO }: Props) {
         <div className="fog-layer fog-layer--a" aria-hidden />
         <div className="fog-layer fog-layer--b" aria-hidden />
 
-        {/* Tarp covers a small portion in the top-left corner */}
-        <div className="tarp" aria-hidden>
-          <div className="tarp-stamp">PARDON OUR DUST</div>
+        {/* Boarded up: three wooden planks nailed diagonally across the
+            sign. Pink neon still glows through the gaps. */}
+        <div className="planks" aria-hidden>
+          <div className="plank plank--1">
+            <span className="nail nail--left" />
+            <span className="nail nail--right" />
+          </div>
+          <div className="plank plank--2">
+            <span className="nail nail--left" />
+            <span className="nail nail--right" />
+          </div>
+          <div className="plank plank--3">
+            <span className="nail nail--left" />
+            <span className="nail nail--right" />
+          </div>
+          {/* Spray-painted COMING SOON stamp over the planks */}
+          <div className="plank-stamp">
+            <div className="plank-stamp-top">COMING</div>
+            <div className="plank-stamp-bottom">8 JUNE</div>
+          </div>
         </div>
-        <div className="tape tape--corner" aria-hidden />
       </div>
 
       <div
@@ -380,76 +396,115 @@ export function HoldingPage({ opensAtISO }: Props) {
           }
         }
 
-        /* Tarp covers the top-left corner of the sign. Tilted. Ragged edge. */
-        .tarp {
+        /* Boarded-up planks. Three thick wooden planks nailed diagonally
+           across the sign at slight angle variation, with gaps between so
+           the pink neon glows through. Slight wood-grain via gradients. */
+        .planks {
           position: absolute;
-          top: -16px;
-          left: -24px;
-          width: 38%;
-          height: 36%;
-          transform: rotate(-4deg);
+          inset: 0;
+          pointer-events: none;
+        }
+        .plank {
+          position: absolute;
+          left: -10%;
+          right: -10%;
+          height: 19%;
+          /* Wood-grain look: warm brown base + faint vertical streaks +
+             a darker rim at top and bottom edges. */
           background:
             linear-gradient(
-              135deg,
-              rgba(0, 0, 0, 0.78),
-              rgba(0, 0, 0, 0.78)
+              to bottom,
+              rgba(0, 0, 0, 0.45) 0%,
+              rgba(0, 0, 0, 0) 14%,
+              rgba(0, 0, 0, 0) 86%,
+              rgba(0, 0, 0, 0.55) 100%
             ),
             repeating-linear-gradient(
-              -45deg,
-              var(--pink) 0 16px,
-              var(--ink) 16px 32px
+              90deg,
+              rgba(0, 0, 0, 0.08) 0 2px,
+              rgba(255, 255, 255, 0.04) 2px 6px,
+              rgba(0, 0, 0, 0.04) 6px 14px
+            ),
+            linear-gradient(
+              to bottom,
+              #5a3a23 0%,
+              #6e4628 50%,
+              #4a2f1c 100%
             );
-          background-blend-mode: multiply;
-          border-top: 4px solid var(--ink);
-          border-left: 4px solid var(--ink);
-          clip-path: polygon(
-            0% 0%,
-            100% 0%,
-            100% 78%,
-            94% 88%,
-            87% 78%,
-            80% 92%,
-            72% 78%,
-            65% 90%,
-            58% 78%,
-            50% 92%,
-            42% 78%,
-            34% 90%,
-            27% 78%,
-            22% 94%,
-            16% 80%,
-            8% 100%,
-            0% 86%
-          );
-          box-shadow: 0 8px 18px rgba(0, 0, 0, 0.6);
-          display: flex;
-          align-items: center;
-          justify-content: center;
+          border-top: 2px solid rgba(0, 0, 0, 0.6);
+          border-bottom: 2px solid rgba(0, 0, 0, 0.7);
+          box-shadow:
+            0 6px 14px rgba(0, 0, 0, 0.55),
+            inset 0 0 30px rgba(0, 0, 0, 0.25);
+          transform-origin: center;
         }
-        .tarp-stamp {
-          font-family: var(--font-bricolage), sans-serif;
-          font-weight: 800;
-          font-size: clamp(11px, 1.8vw, 22px);
-          letter-spacing: 0.18em;
-          color: var(--pink);
-          text-transform: uppercase;
-          transform: rotate(4deg) translateY(-8px);
-          border: 3px dashed var(--pink);
-          padding: 6px 12px;
-          background: rgba(0, 0, 0, 0.55);
-          text-align: center;
-          line-height: 1.1;
+        .plank--1 {
+          top: 12%;
+          transform: rotate(-7deg);
         }
-        .tape--corner {
+        .plank--2 {
+          top: 42%;
+          transform: rotate(-5.5deg);
+          height: 21%;
+        }
+        .plank--3 {
+          top: 72%;
+          transform: rotate(-6.5deg);
+        }
+        .nail {
           position: absolute;
-          top: -8px;
-          left: 18%;
-          width: 70px;
-          height: 18px;
-          background: rgba(220, 220, 220, 0.75);
-          transform: rotate(-12deg);
-          opacity: 0.85;
-          mix-blend-mode: screen;
+          top: 50%;
+          width: 12px;
+          height: 12px;
+          margin-top: -6px;
+          border-radius: 50%;
+          background: radial-gradient(
+            circle at 35% 35%,
+            #d6d2c8 0%,
+            #807a6e 55%,
+            #2a2620 100%
+          );
+          box-shadow:
+            0 1px 1px rgba(0, 0, 0, 0.8),
+            inset 0 -1px 1px rgba(0, 0, 0, 0.6);
+        }
+        .nail--left {
+          left: 12%;
+        }
+        .nail--right {
+          right: 12%;
+        }
+
+        /* Stamp painted across the planks. Uppercase, bold, slightly tilted,
+           with a worn dashed pink border. */
+        .plank-stamp {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%) rotate(-3deg);
+          padding: 14px 26px;
+          background: rgba(0, 0, 0, 0.45);
+          border: 4px dashed var(--pink);
+          border-radius: 4px;
+          font-family: var(--font-bricolage), sans-serif;
+          color: var(--pink);
+          text-align: center;
+          line-height: 0.95;
+          text-transform: uppercase;
+          letter-spacing: 0.12em;
+          text-shadow:
+            0 0 12px rgba(241, 23, 135, 0.65),
+            0 0 28px rgba(241, 23, 135, 0.4);
+          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+        }
+        .plank-stamp-top {
+          font-size: clamp(18px, 3vw, 36px);
+          font-weight: 500;
+        }
+        .plank-stamp-bottom {
+          font-size: clamp(36px, 6.5vw, 80px);
+          font-weight: 800;
+          margin-top: 6px;
         }
       `}</style>
     </main>
