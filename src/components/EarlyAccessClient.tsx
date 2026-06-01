@@ -2,16 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { Marquee } from "@/components/Marquee";
-import { Band } from "@/components/Band";
-import { RegistrationForm } from "@/components/RegistrationForm";
-
-const MARQUEE_ITEMS = [
-  "EARLY ACCESS",
-  "100 REPS CLUB",
-  "PLACE YOUR BET",
-  "22 - 29 JUNE 2026",
-];
+import { LandingPage } from "@/components/LandingPage";
 
 const STORAGE_KEY = "chips_early_unlocked";
 
@@ -147,32 +138,7 @@ export function EarlyAccessClient({ password }: { password: string }) {
     );
   }
 
-  // Unlocked: show a slimmer version of the hero with the form.
-  return (
-    <main>
-      <Marquee items={MARQUEE_ITEMS} />
-
-      <Band color="pink">
-        <div className="two-col">
-          <div>
-            <span className="pill-badge">100 REPS CLUB EARLY ACCESS</span>
-            <h1 className="split-head split-head--hero">
-              <span className="line-a">You&apos;re in the door early.</span>
-              <span className="line-b">Place your bet now.</span>
-            </h1>
-            <p className="band-sub">
-              Same bet. Same rules. Same casino party Sunday 29 June. The
-              public link opens 8 June.
-            </p>
-            <p className="band-sub" style={{ marginTop: -8 }}>
-              22 - 29 June 2026. Free to enter.
-            </p>
-          </div>
-          <div id="get-in">
-            <RegistrationForm earlyAccessPassword={password} />
-          </div>
-        </div>
-      </Band>
-    </main>
-  );
+  // Unlocked: render the full public landing page, with the early-access
+  // password threaded through to the registration form.
+  return <LandingPage earlyAccessPassword={password} />;
 }

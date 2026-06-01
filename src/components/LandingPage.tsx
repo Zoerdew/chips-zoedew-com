@@ -18,7 +18,13 @@ const MARQUEE_ITEMS = [
 const ZOE_PHOTO_URL =
   "https://zoedew.com/wp-content/uploads/2025/09/Zoe-Photos-Sept-25-9-scaled-e1758371328461.jpg";
 
-export function LandingPage() {
+type LandingPageProps = {
+  // When set, the registration form sends this as X-Early-Access so the
+  // API will accept signups before the public launch date. Used by /early.
+  earlyAccessPassword?: string;
+};
+
+export function LandingPage({ earlyAccessPassword }: LandingPageProps = {}) {
   return (
     <main>
       <Marquee items={MARQUEE_ITEMS} />
@@ -519,7 +525,7 @@ export function LandingPage() {
             email to you on the 22nd.
           </p>
           <div style={{ marginTop: 16 }}>
-            <RegistrationForm />
+            <RegistrationForm earlyAccessPassword={earlyAccessPassword} />
           </div>
         </Sticker>
       </Band>
