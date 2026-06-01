@@ -41,7 +41,13 @@ function readRefFromUrl(): string | undefined {
   }
 }
 
-export function RegistrationForm() {
+type Props = {
+  // When set, sent in the X-Early-Access header so the API will accept
+  // registrations before the public landing date. Used by /early.
+  earlyAccessPassword?: string;
+};
+
+export function RegistrationForm({ earlyAccessPassword }: Props = {}) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -61,9 +67,15 @@ export function RegistrationForm() {
     setError(null);
     setSubmitting(true);
     try {
+      const headers: Record<string, string> = {
+        "Content-Type": "application/json",
+      };
+      if (earlyAccessPassword) {
+        headers["X-Early-Access"] = earlyAccessPassword;
+      }
       const res = await fetch("/api/register", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers,
         body: JSON.stringify({ firstName, lastName, email, ref }),
       });
       const data = (await res.json()) as ApiResponse;

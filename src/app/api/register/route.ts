@@ -31,19 +31,28 @@ function isEmail(value: string): boolean {
 }
 
 export async function POST(req: Request) {
-  // Gate: before the landing page is public, refuse signups outright.
-  // The holding page has no form, so this only fires on direct POSTs.
+  // Gate: before the landing page is public, refuse signups outright UNLESS
+  // a valid early-access password is presented in the X-Early-Access header.
+  // The /early page sends this header automatically. The public form does not.
   if (!isLandingPublic()) {
-    return NextResponse.json(
-      {
-        ok: false,
-        error: {
-          field: "form",
-          message: "The doors aren't open yet. Come back on 8 June.",
+    const earlyHeader = req.headers.get("x-early-access")?.trim().toLowerCase();
+    const earlySecret = (process.env.EARLY_ACCESS_PASSWORD ?? "")
+      .trim()
+      .toLowerCase();
+    const earlyOk =
+      !!earlyHeader && !!earlySecret && earlyHeader === earlySecret;
+    if (!earlyOk) {
+      return NextResponse.json(
+        {
+          ok: false,
+          error: {
+            field: "form",
+            message: "The doors aren't open yet. Come back on 8 June.",
+          },
         },
-      },
-      { status: 503 }
-    );
+        { status: 503 }
+      );
+    }
   }
 
   let body: RegisterBody;
