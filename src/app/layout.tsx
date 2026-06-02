@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Bricolage_Grotesque } from "next/font/google";
 import "./globals.css";
 import { isLandingPublic } from "@/lib/betTiming";
+import { LEAD_SOURCE_SCRIPT } from "@/lib/leadSourceScript";
 
 const bricolage = Bricolage_Grotesque({
   subsets: ["latin"],
@@ -65,6 +66,15 @@ export function generateMetadata(): Metadata {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en-GB" className={bricolage.variable}>
+      <head>
+        {/* Lead-source tracker. Runs before any other client code, sets
+            cb_* cookies under .zoedew.com so attribution is shared with
+            the main WordPress site. Reads referrer + UTM + click IDs. */}
+        <script
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{ __html: LEAD_SOURCE_SCRIPT }}
+        />
+      </head>
       <body>{children}</body>
     </html>
   );

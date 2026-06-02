@@ -22,6 +22,31 @@ type ApiResponse = ApiSuccess | ApiError;
 
 const REF_STORAGE_KEY = "chips_ref";
 
+// Tiny cookie reader. Mirrors the helper inside the lead-source script.
+function getCookie(name: string): string {
+  if (typeof document === "undefined") return "";
+  const m = document.cookie.match("(?:^|; )" + name + "=([^;]*)");
+  return m ? decodeURIComponent(m[1]) : "";
+}
+
+type Attribution = {
+  firstTouchChannel: string;
+  firstTouchDetail: string;
+  firstTouchCampaign: string;
+  lastTouchChannel: string;
+  lastTouchDetail: string;
+};
+
+function readAttribution(): Attribution {
+  return {
+    firstTouchChannel: getCookie("cb_channel"),
+    firstTouchDetail: getCookie("cb_channel_detail"),
+    firstTouchCampaign: getCookie("cb_campaign"),
+    lastTouchChannel: getCookie("cb_lt_channel"),
+    lastTouchDetail: getCookie("cb_lt_channel_detail"),
+  };
+}
+
 function readRefFromUrl(): string | undefined {
   if (typeof window === "undefined") return undefined;
   const params = new URLSearchParams(window.location.search);
@@ -73,10 +98,17 @@ export function RegistrationForm({ earlyAccessPassword }: Props = {}) {
       if (earlyAccessPassword) {
         headers["X-Early-Access"] = earlyAccessPassword;
       }
+      const attribution = readAttribution();
       const res = await fetch("/api/register", {
         method: "POST",
         headers,
-        body: JSON.stringify({ firstName, lastName, email, ref }),
+        body: JSON.stringify({
+          firstName,
+          lastName,
+          email,
+          ref,
+          attribution,
+        }),
       });
       const data = (await res.json()) as ApiResponse;
       if (!data.ok) {
@@ -84,6 +116,24 @@ export function RegistrationForm({ earlyAccessPassword }: Props = {}) {
         return;
       }
       setResult(data);
+
+      // Fire-and-forget GTM/dataLayer push. Wrapped in try/catch so a
+      // tracking failure never blocks the confirmation screen.
+      try {
+        type DataLayerWindow = Window & { dataLayer?: Record<string, unknown>[] };
+        const w = window as DataLayerWindow;
+        w.dataLayer = w.dataLayer || [];
+        w.dataLayer.push({
+          event: "bet_registration",
+          signup_type: "bet",
+          page_path: window.location.pathname,
+          lt_channel: attribution.lastTouchChannel || "Direct",
+          lt_channel_detail: attribution.lastTouchDetail || "",
+          ft_channel: attribution.firstTouchChannel || "Direct",
+        });
+      } catch {
+        // tracking failed; carry on
+      }
     } catch (err) {
       setError("Something broke on our end. Try again in a minute.");
     } finally {

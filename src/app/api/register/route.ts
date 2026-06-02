@@ -12,12 +12,45 @@ import { isLandingPublic } from "@/lib/betTiming";
 
 export const runtime = "nodejs";
 
+type AttributionPayload = {
+  firstTouchChannel?: string;
+  firstTouchDetail?: string;
+  firstTouchCampaign?: string;
+  lastTouchChannel?: string;
+  lastTouchDetail?: string;
+};
+
 type RegisterBody = {
   firstName?: string;
   lastName?: string;
   email?: string;
   ref?: string;
+  attribution?: AttributionPayload;
 };
+
+// Trim, drop nullish, drop overly long values. The attribution payload
+// is client-provided so we treat it as untrusted.
+function cleanAttr(v: unknown): string {
+  if (typeof v !== "string") return "";
+  return v.trim().slice(0, 200);
+}
+
+function attributionFields(a?: AttributionPayload): Record<string, string> {
+  if (!a) return {};
+  const out: Record<string, string> = {};
+  const map: Array<[keyof AttributionPayload, string]> = [
+    ["firstTouchChannel", "First Touch Channel"],
+    ["firstTouchDetail", "First Touch Detail"],
+    ["firstTouchCampaign", "First Touch Campaign"],
+    ["lastTouchChannel", "Last Touch Channel"],
+    ["lastTouchDetail", "Last Touch Detail"],
+  ];
+  for (const [k, fieldName] of map) {
+    const cleaned = cleanAttr(a[k]);
+    if (cleaned) out[fieldName] = cleaned;
+  }
+  return out;
+}
 
 function bad(field: string, message: string) {
   return NextResponse.json(
@@ -109,6 +142,18 @@ export async function POST(req: Request) {
     entryType: "New Participant",
     referredBy: referrerId,
   });
+
+  // Write attribution to the new record. Fire-and-forget: registration
+  // must succeed even if these fields don't exist in Airtable yet, or
+  // the patch fails for any other reason.
+  const attrFields = attributionFields(body.attribution);
+  if (Object.keys(attrFields).length > 0) {
+    try {
+      await updateBetParticipant(created.id, attrFields);
+    } catch (err) {
+      console.error("Failed to set attribution fields:", err);
+    }
+  }
 
   // Award 3 chips to the referrer, idempotently on (referrerId, newId).
   if (referrerId && referrerDisplayName) {
