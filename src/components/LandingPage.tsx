@@ -379,25 +379,25 @@ export function LandingPage({ earlyAccessPassword }: LandingPageProps = {}) {
           <div className="win-tile">
             <span className="win-tile__name">Sarra</span>
             <p className="win-tile__body">
-              <span className="win-tile__stat">£18,960</span>
-              Highest revenue in the cohort. Logged steadily across all the
-              Rs while the rest of us were redrafting.
+              <span className="win-tile__stat">Steady reps</span>
+              Logged the most revenue in the cohort by showing up every
+              week. No big launch, just consistent reps across all the Rs.
             </p>
           </div>
           <div className="win-tile">
             <span className="win-tile__name">Georgina</span>
             <p className="win-tile__body">
               <span className="win-tile__stat">Books out June</span>
-              A big copywriting project from a returning client. Landed
-              one day, paid the next, June fully booked.
+              A returning-client copywriting project. Landed one day, paid
+              the next, June fully booked.
             </p>
           </div>
           <div className="win-tile">
             <span className="win-tile__name">Shelly</span>
             <p className="win-tile__body">
               <span className="win-tile__stat">7 launch sales</span>
-              Plus an old prospect resurfaced from somewhere mid-launch to
-              ask if she was still available.
+              Plus an old prospect resurfaced mid-launch to ask if she was
+              still available.
             </p>
           </div>
           <div className="win-tile">
@@ -411,9 +411,9 @@ export function LandingPage({ earlyAccessPassword }: LandingPageProps = {}) {
           <div className="win-tile">
             <span className="win-tile__name">Victoria</span>
             <p className="win-tile__body">
-              <span className="win-tile__stat">£850 on a Sunday</span>
-              From an existing client, on a Sunday night. From doing the
-              rep when she could have closed the laptop.
+              <span className="win-tile__stat">Sunday close</span>
+              An existing client, a Sunday-night message, a sale signed
+              before bed. The opposite of redrafting.
             </p>
           </div>
           <div className="win-tile">
@@ -435,9 +435,9 @@ export function LandingPage({ earlyAccessPassword }: LandingPageProps = {}) {
           <div className="win-tile">
             <span className="win-tile__name">Emma</span>
             <p className="win-tile__body">
-              <span className="win-tile__stat">£1188 + pipeline</span>
-              One sale, three soft no&apos;s, two follow-up openings.
-              Switched her CTAs to reply-or-ignore.
+              <span className="win-tile__stat">Reply or ignore</span>
+              One sale, three soft no&apos;s, two follow-up openings, from
+              switching her CTAs to reply-or-ignore.
             </p>
           </div>
         </div>
