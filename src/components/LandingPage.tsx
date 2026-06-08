@@ -347,84 +347,97 @@ export function LandingPage({ earlyAccessPassword }: LandingPageProps = {}) {
         <span className="pill-badge pill-badge--paper">PROOF FROM THE COHORT</span>
         <h2 className="split-head">
           <span className="line-a">Wins logged by the 100 Reps Club beta.</span>
-          <span className="line-b">First three weeks. May 2026.</span>
+          <span className="line-b">First six weeks. May - June 2026.</span>
         </h2>
         <p className="band-sub">
           The 100 Reps Club beta is the 90-day cohort I mentioned earlier.
-          54 members, paid £45 to join. These are the wins they logged in
-          the wins channel between 5 and 19 May. The same tracker, the
-          same Rs, the same logic the bet runs on.
+          64 members, paid £45 to join. These are the totals from their
+          first six weeks of logging reps. The same tracker, the same Rs,
+          the same logic the bet runs on.
         </p>
 
         <div className="stat-row">
           <div className="stat-card">
-            <span className="stat-card__num">54</span>
+            <span className="stat-card__num">64</span>
             <span className="stat-card__label">Signups (goal was 25)</span>
           </div>
           <div className="stat-card">
-            <span className="stat-card__num">37.5%</span>
-            <span className="stat-card__label">Made their £45 entry back in week 1</span>
+            <span className="stat-card__num">52%</span>
+            <span className="stat-card__label">Made their £45 entry back from reps</span>
           </div>
           <div className="stat-card">
-            <span className="stat-card__num">10%</span>
-            <span className="stat-card__label">Tracked 25% of monthly revenue from reps</span>
+            <span className="stat-card__num">27%</span>
+            <span className="stat-card__label">Hit 25% of monthly revenue from reps</span>
+          </div>
+          <div className="stat-card">
+            <span className="stat-card__num">£114k</span>
+            <span className="stat-card__label">Total revenue logged by the cohort</span>
           </div>
         </div>
 
         <div className="wins-grid">
           <div className="win-tile">
+            <span className="win-tile__name">Sarra</span>
+            <p className="win-tile__body">
+              <span className="win-tile__stat">£18,960</span>
+              Highest revenue in the cohort. Logged steadily across all the
+              Rs while the rest of us were redrafting.
+            </p>
+          </div>
+          <div className="win-tile">
+            <span className="win-tile__name">Georgina</span>
+            <p className="win-tile__body">
+              <span className="win-tile__stat">Books out June</span>
+              A big copywriting project from a returning client. Landed
+              one day, paid the next, June fully booked.
+            </p>
+          </div>
+          <div className="win-tile">
+            <span className="win-tile__name">Shelly</span>
+            <p className="win-tile__body">
+              <span className="win-tile__stat">7 launch sales</span>
+              Plus an old prospect resurfaced from somewhere mid-launch to
+              ask if she was still available.
+            </p>
+          </div>
+          <div className="win-tile">
+            <span className="win-tile__name">Nicola</span>
+            <p className="win-tile__body">
+              <span className="win-tile__stat">Retainer sold</span>
+              Launch strategy coaching, regular calls, copy chiefing.
+              Right up her street, and recurring.
+            </p>
+          </div>
+          <div className="win-tile">
+            <span className="win-tile__name">Victoria</span>
+            <p className="win-tile__body">
+              <span className="win-tile__stat">£850 on a Sunday</span>
+              From an existing client, on a Sunday night. From doing the
+              rep when she could have closed the laptop.
+            </p>
+          </div>
+          <div className="win-tile">
+            <span className="win-tile__name">Eloise</span>
+            <p className="win-tile__body">
+              <span className="win-tile__stat">Signature offer</span>
+              A referral, paid in full, from a coffee chat she had a year
+              ago and forgot about.
+            </p>
+          </div>
+          <div className="win-tile">
+            <span className="win-tile__name">Hazel</span>
+            <p className="win-tile__body">
+              <span className="win-tile__stat">Proof of concept</span>
+              First subscription sale on a brand-new offer. Sold before
+              she finished building it.
+            </p>
+          </div>
+          <div className="win-tile">
             <span className="win-tile__name">Emma</span>
             <p className="win-tile__body">
-              <span className="win-tile__stat">£1188</span>
-              One sale plus a full pipeline of soft no&apos;s and follow-up
-              openings. Switched her CTAs to reply-or-ignore.
-            </p>
-          </div>
-          <div className="win-tile">
-            <span className="win-tile__name">Claire-Louise</span>
-            <p className="win-tile__body">
-              <span className="win-tile__stat">2 sales</span>
-              One Reengage rep. One direct sale, one stranger sale on a
-              course that had been quiet for months.
-            </p>
-          </div>
-          <div className="win-tile">
-            <span className="win-tile__name">Fiona</span>
-            <p className="win-tile__body">
-              <span className="win-tile__stat">Same day</span>
-              Sold a Pitch Club beta spot off a Reach email the same
-              morning. Signed and paid.
-            </p>
-          </div>
-          <div className="win-tile">
-            <span className="win-tile__name">Colie</span>
-            <p className="win-tile__body">
-              <span className="win-tile__stat">Retain rep</span>
-              A February client who had verbally committed paid for the
-              signature offer.
-            </p>
-          </div>
-          <div className="win-tile">
-            <span className="win-tile__name">Eve</span>
-            <p className="win-tile__body">
-              <span className="win-tile__stat">2 sales</span>
-              First sale of a new course. Second from a personal outreach
-              email written during the live co-working call.
-            </p>
-          </div>
-          <div className="win-tile">
-            <span className="win-tile__name">Vicky</span>
-            <p className="win-tile__body">
-              <span className="win-tile__stat">Day 1 rep</span>
-              Logged a rep on day one of the cohort. Two weeks later the
-              client confirmed they wanted to go ahead.
-            </p>
-          </div>
-          <div className="win-tile">
-            <span className="win-tile__name">Pippa</span>
-            <p className="win-tile__body">
-              <span className="win-tile__stat">First sale</span>
-              First sale of a new low-cost training on launch day.
+              <span className="win-tile__stat">£1188 + pipeline</span>
+              One sale, three soft no&apos;s, two follow-up openings.
+              Switched her CTAs to reply-or-ignore.
             </p>
           </div>
         </div>
