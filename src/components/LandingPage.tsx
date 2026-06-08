@@ -520,10 +520,6 @@ export function LandingPage({ earlyAccessPassword }: LandingPageProps = {}) {
             Free to enter. The bet starts Sunday 22 June. The party is
             Sunday 29 June at 7pm UK on Zoom.
           </p>
-          <p className="text-body" style={{ marginBottom: 8 }}>
-            Already a 100 Reps Club member? You&apos;re already in. Separate
-            email to you on the 22nd.
-          </p>
           <div style={{ marginTop: 16 }}>
             <RegistrationForm earlyAccessPassword={earlyAccessPassword} />
           </div>
@@ -569,14 +565,6 @@ export function LandingPage({ earlyAccessPassword }: LandingPageProps = {}) {
               You qualify for the guarantee call. 30 minutes with me, I
               read what you sent, we work out why and change one thing in
               your next batch.
-            </p>
-          </div>
-          <div className="obj-tile">
-            <span className="obj-tile__quote">&quot;I&apos;m already in the 100 Reps Club.&quot;</span>
-            <p className="obj-tile__body">
-              You&apos;re already in the bet. Chips, fruit machine, party,
-              all for you. The cart open on the 29th is so you can renew or
-              upgrade.
             </p>
           </div>
         </div>
