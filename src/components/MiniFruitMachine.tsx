@@ -56,7 +56,7 @@ const REVEALS: Reveal[] = [
     icon: "/icons/poker-stack.png",
     label: "Casino party",
     blurb:
-      "Sunday 29 June, 7pm. Cash your chips. Pop the cart. The 100 Reps Club opens.",
+      "Monday 29 June, 7pm. Cash your chips. Pop the cart. The 100 Reps Club opens.",
   },
 ];
 

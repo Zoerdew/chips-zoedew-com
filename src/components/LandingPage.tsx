@@ -54,7 +54,7 @@ export function LandingPage({ earlyAccessPassword }: LandingPageProps = {}) {
                 </span>
               </ScratchReveal>
               <span style={{ fontSize: 14, opacity: 0.85 }}>
-                Free to enter. Casino party live on Zoom Sun 29 June.
+                Free to enter. Casino party live on Zoom Mon 29 June.
               </span>
             </div>
             <p className="band-sub" style={{ marginTop: 0 }}>
@@ -283,14 +283,14 @@ export function LandingPage({ earlyAccessPassword }: LandingPageProps = {}) {
             <span className="card-grid__num">05</span>
             <h3 className="card-grid__title">Hit 100 and you spin the fruit machine.</h3>
             <p className="card-grid__body">
-              Live on Zoom on Sunday 29 June at 7pm. The reels are loaded
+              Live on Zoom on Monday 29 June at 7pm. The reels are loaded
               with donated prizes. The jackpot tile is three months of
               100 Reps Club, free.
             </p>
           </div>
           <div className="card-grid__item">
             <span className="card-grid__num">06</span>
-            <h3 className="card-grid__title">Chip shop opens on Sunday night.</h3>
+            <h3 className="card-grid__title">Chip shop opens on Monday night.</h3>
             <p className="card-grid__body">
               Spend chips on things you&apos;d use anyway: Dig Your Data,
               the Lead Tracker, money off 100 Reps Club, a 30-minute call
@@ -530,8 +530,8 @@ export function LandingPage({ earlyAccessPassword }: LandingPageProps = {}) {
         <Sticker tab="GET IN" tabColor="pink" tilt="left">
           <h2 className="text-h2">Place your bet.</h2>
           <p className="text-body">
-            Free to enter. The bet starts Sunday 22 June. The party is
-            Sunday 29 June at 7pm UK on Zoom.
+            Free to enter. The bet starts Monday 22 June. The party is
+            Monday 29 June at 7pm UK on Zoom.
           </p>
           <div style={{ marginTop: 16 }}>
             <RegistrationForm earlyAccessPassword={earlyAccessPassword} />
@@ -587,7 +587,7 @@ export function LandingPage({ earlyAccessPassword }: LandingPageProps = {}) {
       <Band color="felt">
         <div className="two-col">
           <div>
-            <span className="pill-badge pill-badge--yellow">SUNDAY 29 JUNE · 7PM UK</span>
+            <span className="pill-badge pill-badge--yellow">MONDAY 29 JUNE · 7PM UK</span>
             <h2 className="split-head">
               <span className="line-a">The casino party.</span>
               <span className="line-b">90 minutes on Zoom.</span>

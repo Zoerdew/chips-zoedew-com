@@ -42,7 +42,7 @@ export default async function PortalHomePage() {
           <h1 className="text-h2">The bet opens 22 June.</h1>
           <p className="text-body" style={{ marginTop: 14 }}>
             You&apos;re registered and you&apos;re in. Logging opens at
-            midnight on Sunday 22 June. Until then, here&apos;s the clock.
+            midnight on Monday 22 June. Until then, here&apos;s the clock.
           </p>
           <div style={{ marginTop: 22 }}>
             <Countdown target={betTimingISO.opensAt} label="Bet opens in" />
@@ -62,11 +62,11 @@ export default async function PortalHomePage() {
           <p className="text-body">
             Every 25 minutes you log earns a scratch card. Chips stack for
             the doing. Hit 100 and you spin the fruit machine at the party on
-            Sunday 29 June at 7pm.
+            Monday 29 June at 7pm.
           </p>
           <p className="text-body">
             Logging closes 23:59 on Sunday 28 June. The party and the chip
-            shop are the 29th.
+            shop are Monday the 29th.
           </p>
         </div>
       )}
@@ -128,7 +128,7 @@ export default async function PortalHomePage() {
           <span className="sticker__tab">LOGGING CLOSED</span>
           <h1 className="text-h2">Logging is done. The party is next.</h1>
           <p className="text-body" style={{ marginTop: 14 }}>
-            Reps closed at 23:59 on 28 June. The casino party is Sunday 29
+            Reps closed at 23:59 on 28 June. The casino party is Monday 29
             June at 7pm UK. Head to the Casino tab when it opens.
           </p>
         </div>

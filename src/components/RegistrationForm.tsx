@@ -161,14 +161,14 @@ export function RegistrationForm({ earlyAccessPassword }: Props = {}) {
         </h2>
         <p className="lead" style={{ marginTop: 12 }}>
           {result.alreadyRegistered
-            ? "Same email, already on the list. I'll send your magic link on Sunday 22 June."
-            : "I'll send your magic link to your inbox on Sunday 22 June. The tracker opens that morning."}
+            ? "Same email, already on the list. I'll send your magic link on Monday 22 June."
+            : "I'll send your magic link to your inbox on Monday 22 June. The tracker opens that morning."}
         </p>
 
         <div style={{ marginTop: 28 }}>
           <h3 className="text-h3">Your sharing image.</h3>
           <p className="text-body" style={{ marginTop: 8 }}>
-            Save this to your camera roll and post it on Sunday 22 June when the bet kicks off. The QR code on it sends people to your referral link. Three chips per person who registers through you.
+            Save this to your camera roll and post it on Monday 22 June when the bet kicks off. The QR code on it sends people to your referral link. Three chips per person who registers through you.
           </p>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img

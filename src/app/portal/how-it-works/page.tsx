@@ -79,7 +79,7 @@ export default async function HowItWorksPage() {
 
       <div className="sticker sticker--tilt-right" style={{ marginTop: 28 }}>
         <span className="sticker__tab">5 · THE PARTY</span>
-        <h2 className="text-h3">Sunday 29 June, 7pm UK.</h2>
+        <h2 className="text-h3">Monday 29 June, 7pm UK.</h2>
         <p className="text-body" style={{ marginTop: 10 }}>
           A casino party on Zoom. The leaderboard goes up, the fruit machine
           runs, the casino shop opens, and the 100 Reps Club cart opens at
