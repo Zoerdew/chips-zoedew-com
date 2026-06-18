@@ -43,6 +43,9 @@ export function DealMeARep() {
         <p className="dmr__sub">
           Two decks. One rep. Stop scrolling, start sending.
         </p>
+        <p className="dmr__sub dmr__sub--small">
+          There may be some weird combos. Deal again if you need to.
+        </p>
       </div>
 
       <div className="dmr__cards">
@@ -166,6 +169,12 @@ export function DealMeARep() {
           font-size: 14px;
           color: var(--ink);
           opacity: 0.75;
+        }
+        .dmr__sub--small {
+          margin-top: 4px;
+          font-size: 12px;
+          opacity: 0.6;
+          font-style: italic;
         }
 
         .dmr__cards {

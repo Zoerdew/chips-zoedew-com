@@ -95,6 +95,12 @@ const OVERRIDES: Record<string, string> = {
     "Open a door with a cold lead today. There is no reconnection yet, only a first connection.",
   "cold-lead__check-in":
     "Check in with a cold lead with a real reason, not a 'just checking in' line.",
+  "cold-lead__pitch-a-collaboration":
+    "Skip the pitch on a cold lead today. Send one warm-up message instead.",
+  "cold-lead__send-a-voicenote":
+    "Cold lead doesn't get a voice note yet. Send a short opener message instead.",
+  "cold-lead__follow-up":
+    "Find one cold lead worth warming and send a first follow-up today.",
 
   // Ghosted leads need acknowledgement, not pretending.
   "ghosted-lead__follow-up":
