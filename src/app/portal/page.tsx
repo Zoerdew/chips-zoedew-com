@@ -7,6 +7,7 @@ import { PortalHeader } from "@/components/portal/PortalHeader";
 import { PortalNav } from "@/components/portal/PortalNav";
 import { Countdown } from "@/components/portal/Countdown";
 import { RepLogForm } from "@/components/portal/RepLogForm";
+import { DealMeARep } from "@/components/portal/DealMeARep";
 
 export const metadata = {
   title: "Portal — The 100 Minute Bet",
@@ -108,6 +109,10 @@ export default async function PortalHomePage() {
                 label="Logging closes in"
               />
             </div>
+          </div>
+
+          <div style={{ marginTop: 28 }}>
+            <DealMeARep />
           </div>
 
           <div className="sticker sticker--tilt-right" style={{ marginTop: 28 }}>
