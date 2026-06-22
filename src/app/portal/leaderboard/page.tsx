@@ -46,7 +46,7 @@ export default async function LeaderboardPage() {
         )}
       </div>
 
-      <div className="sticker sticker--tilt-right" style={{ marginTop: 28 }}>
+      <div className="sticker sticker--no-tilt" style={{ marginTop: 28 }}>
         <span className="sticker__tab">THE BOARD</span>
         <div style={{ marginTop: 16 }}>
           <LeaderboardTable rows={rows} meId={session.participantId} />
