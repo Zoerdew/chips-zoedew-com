@@ -8,6 +8,7 @@ import { PortalNav } from "@/components/portal/PortalNav";
 import { Countdown } from "@/components/portal/Countdown";
 import { RepLogForm } from "@/components/portal/RepLogForm";
 import { DealMeARep } from "@/components/portal/DealMeARep";
+import { LiveTracker } from "@/components/LiveTracker";
 
 export const metadata = {
   title: "Portal — The 100 Minute Bet",
@@ -36,6 +37,10 @@ export default async function PortalHomePage() {
     <main style={{ maxWidth: 760, margin: "0 auto", padding: "24px 16px 64px" }}>
       <PortalHeader firstName={session.firstName} chipBalance={chipBalance} />
       <PortalNav />
+
+      <div className="sticker" style={{ marginTop: 28 }}>
+        <LiveTracker />
+      </div>
 
       {phase === "before" && (
         <div className="sticker sticker--tilt-left" style={{ marginTop: 28 }}>
