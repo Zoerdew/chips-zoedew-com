@@ -18,8 +18,8 @@ const gbp = new Intl.NumberFormat("en-GB", {
 });
 
 // Live cumulative tracker for the landing page. Fully self-contained: it
-// fetches /api/stats itself so LandingPage can stay a plain (non-async)
-// component and still render inside the /early client wrapper.
+// fetches /api/stats itself so it can mount from the server page without
+// making any parent component async.
 export function LiveTracker() {
   const [totals, setTotals] = useState<Totals | null>(null);
   const [loaded, setLoaded] = useState(false);
@@ -75,12 +75,11 @@ export function LiveTracker() {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "1fr",
+          gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
           gap: 16,
           margin: "28px auto 8px",
           maxWidth: 640,
         }}
-        className="live-tracker__grid"
       >
         <div className="stat-card">
           <span
