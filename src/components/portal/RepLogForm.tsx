@@ -31,6 +31,7 @@ export function RepLogForm() {
   const [minutes, setMinutes] = useState("");
   const [revenueR, setRevenueR] = useState("");
   const [outcome, setOutcome] = useState("No result");
+  const [moneyMade, setMoneyMade] = useState("");
   const [note, setNote] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -52,6 +53,7 @@ export function RepLogForm() {
           revenueR,
           outcome,
           note,
+          moneyMade: outcome === "Sale" ? Number(moneyMade) : 0,
         }),
       });
       const data = await res.json();
@@ -86,6 +88,7 @@ export function RepLogForm() {
       setMinutes("");
       setRevenueR("");
       setOutcome("No result");
+      setMoneyMade("");
       setNote("");
 
       // If this rep created new scratch cards, pop the dismissible modal
@@ -208,6 +211,33 @@ export function RepLogForm() {
             ))}
           </select>
         </label>
+
+        {outcome === "Sale" && (
+          <label style={{ display: "block", marginBottom: 16 }}>
+            <span style={labelStyle}>How much was the sale? (£)</span>
+            <input
+              className="input"
+              type="number"
+              min={0}
+              step="0.01"
+              inputMode="decimal"
+              placeholder="e.g. 450"
+              value={moneyMade}
+              onChange={(e) => setMoneyMade(e.target.value)}
+              style={{ marginTop: 6 }}
+            />
+            <span
+              style={{
+                display: "block",
+                marginTop: 6,
+                fontSize: 13,
+                opacity: 0.75,
+              }}
+            >
+              Leave blank if you don&apos;t know yet. It still counts as a sale.
+            </span>
+          </label>
+        )}
 
         <label style={{ display: "block", marginBottom: 16 }}>
           <span style={labelStyle}>One line on what you did</span>
