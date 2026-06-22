@@ -8,6 +8,7 @@ const API_BASE = "https://api.airtable.com/v0";
 type RepFields = {
   "Minutes Spent"?: number;
   "Money Made"?: number;
+  Outcome?: string[];
   "Bet Participant"?: string[];
 };
 type AirtableRecord<T> = { id: string; createdTime: string; fields: T };
@@ -19,6 +20,7 @@ type AirtableListResponse<T> = {
 export type BetTotals = {
   minutes: number;
   money: number;
+  sales: number;
   players: number;
   hit100: number;
 };
@@ -26,6 +28,7 @@ export type BetTotals = {
 export async function getBetTotals(): Promise<BetTotals> {
   let minutes = 0;
   let money = 0;
+  let sales = 0;
   const minutesByParticipant = new Map<string, number>();
 
   let offset: string | undefined;
@@ -48,6 +51,8 @@ export async function getBetTotals(): Promise<BetTotals> {
       const made = rec.fields["Money Made"] ?? 0;
       minutes += mins;
       money += made;
+      const outcome = rec.fields["Outcome"] ?? [];
+      if (outcome.includes("Sale")) sales += 1;
       for (const pid of linked) {
         minutesByParticipant.set(
           pid,
@@ -61,5 +66,5 @@ export async function getBetTotals(): Promise<BetTotals> {
   let hit100 = 0;
   for (const m of minutesByParticipant.values()) if (m >= 100) hit100 += 1;
 
-  return { minutes, money, players: minutesByParticipant.size, hit100 };
+  return { minutes, money, sales, players: minutesByParticipant.size, hit100 };
 }
