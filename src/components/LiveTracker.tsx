@@ -81,7 +81,7 @@ export function LiveTracker() {
           maxWidth: 640,
         }}
       >
-        <div className="stat-card">
+        <div className="stat-card" style={{ color: "var(--felt)" }}>
           <span
             className="stat-card__num"
             style={{ fontVariantNumeric: "tabular-nums" }}
