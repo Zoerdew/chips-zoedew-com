@@ -1,5 +1,7 @@
 import { HoldingPage } from "@/components/HoldingPage";
 import { LandingPage } from "@/components/LandingPage";
+import { LiveTracker } from "@/components/LiveTracker";
+import { Band } from "@/components/Band";
 import { betTimingISO, isLandingPublic } from "@/lib/betTiming";
 
 // Don't statically cache: the gate flips on the date the page is served,
@@ -11,5 +13,12 @@ export default function HomePage() {
   if (!isLandingPublic()) {
     return <HoldingPage opensAtISO={betTimingISO.landingOpensAt} />;
   }
-  return <LandingPage />;
+  return (
+    <>
+      <Band color="felt">
+        <LiveTracker />
+      </Band>
+      <LandingPage />
+    </>
+  );
 }
