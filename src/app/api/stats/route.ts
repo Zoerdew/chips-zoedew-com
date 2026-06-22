@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getBetTotals } from "@/lib/airtable";
+import { getBetTotals } from "@/lib/betTotals";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
