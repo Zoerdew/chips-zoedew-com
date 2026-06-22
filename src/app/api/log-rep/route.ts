@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { SESSION_COOKIE, verifySessionToken } from "@/lib/auth";
 import { createRep, findBetParticipantById } from "@/lib/airtable";
+import { setRepMoney } from "@/lib/repMoney";
 import { processRep } from "@/lib/chipEngine";
 import { isLoggingOpen } from "@/lib/betTiming";
 
@@ -15,6 +16,7 @@ type Body = {
   revenueR?: string;
   outcome?: string;
   note?: string;
+  moneyMade?: number;
 };
 
 export async function POST(req: Request) {
@@ -68,6 +70,13 @@ export async function POST(req: Request) {
 
   const note = (body.note ?? "").trim().slice(0, 500);
 
+  // Money only applies to a sale. Accept a non-negative amount, capped.
+  const moneyRaw = Number(body.moneyMade);
+  const moneyMade =
+    outcome === "Sale" && Number.isFinite(moneyRaw) && moneyRaw > 0
+      ? Math.min(moneyRaw, 1_000_000)
+      : 0;
+
   // --- Read the participant to get the dual-member link + current stats ---
   const participant = await findBetParticipantById(session.participantId);
   if (!participant) {
@@ -96,6 +105,16 @@ export async function POST(req: Request) {
     participantLinkId,
   });
 
+  // --- Record the sale amount on the rep (best effort) ---
+  if (moneyMade > 0) {
+    try {
+      await setRepMoney(rep.id, moneyMade);
+    } catch {
+      // The rep itself is logged; don't fail the whole request if the
+      // money write hiccups.
+    }
+  }
+
   // --- Run the chip engine ---
   const summary = await processRep({
     betParticipantId: session.participantId,
@@ -110,6 +129,7 @@ export async function POST(req: Request) {
       minutes: roundedMinutes,
       revenueR,
       outcome,
+      moneyMade,
     },
     summary,
   });
