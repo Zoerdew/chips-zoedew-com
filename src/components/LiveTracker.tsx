@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 type Totals = {
   minutes: number;
   money: number;
+  sales: number;
   players: number;
   hit100: number;
 };
@@ -36,6 +37,7 @@ export function LiveTracker() {
           setTotals({
             minutes: data.minutes ?? 0,
             money: data.money ?? 0,
+            sales: data.sales ?? 0,
             players: data.players ?? 0,
             hit100: data.hit100 ?? 0,
           });
@@ -62,6 +64,7 @@ export function LiveTracker() {
   }, []);
 
   const minutes = totals ? totals.minutes.toLocaleString("en-GB") : "—";
+  const sales = totals ? totals.sales.toLocaleString("en-GB") : "—";
   const money = totals ? gbp.format(totals.money) : "—";
 
   return (
@@ -69,16 +72,16 @@ export function LiveTracker() {
       <span className="pill-badge pill-badge--yellow">LIVE SCOREBOARD</span>
       <h2 className="split-head" style={{ marginTop: 12 }}>
         <span className="line-a">The bet, live.</span>
-        <span className="line-b">Minutes and money, logged so far.</span>
+        <span className="line-b">Minutes, sales and money, logged so far.</span>
       </h2>
 
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+          gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
           gap: 16,
           margin: "28px auto 8px",
-          maxWidth: 640,
+          maxWidth: 760,
         }}
       >
         <div className="stat-card" style={{ color: "var(--felt)" }}>
@@ -91,6 +94,15 @@ export function LiveTracker() {
           <span className="stat-card__label">Minutes logged</span>
         </div>
         <div className="stat-card">
+          <span
+            className="stat-card__num"
+            style={{ fontVariantNumeric: "tabular-nums" }}
+          >
+            {sales}
+          </span>
+          <span className="stat-card__label">Sales made</span>
+        </div>
+        <div className="stat-card" style={{ color: "var(--felt)" }}>
           <span
             className="stat-card__num"
             style={{ fontVariantNumeric: "tabular-nums" }}
