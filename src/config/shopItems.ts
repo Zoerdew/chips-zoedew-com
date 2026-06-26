@@ -35,13 +35,22 @@ export const SHOP_ITEMS: ShopItem[] = [
     realValue: "£100 + VAT",
   },
   {
-    id: "strategy-call",
+    id: "strategy-call-30",
     name: "30-minute strategy call",
     shopPrizeKey: "30 min strategy call",
     chipCost: 35,
     blurb:
       "Half an hour with Zoë, one to one. Bring your reps, leave with a plan.",
     realValue: "£97 + VAT",
+  },
+  {
+    id: "strategy-session-90",
+    name: "90-minute strategy session",
+    shopPrizeKey: "90 min strategy session",
+    chipCost: 70,
+    blurb:
+      "A full 90 minutes with Zoë. Same as the fruit machine prize. Worth £397.",
+    realValue: "£397",
   },
 ];
 
