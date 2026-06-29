@@ -33,7 +33,10 @@ export default async function CasinoPage() {
 
   const unlocked = isFruitMachineUnlocked();
   const partyOpen = isPartyOpen();
-  const eligible = minutes >= 100;
+  // Eligibility gate removed: anyone with 10 chips can spin. The
+  // 100-minute hitters still get a free spin via `freeSpinAvailable`.
+  const eligible = true;
+  void minutes; // kept above for sumBetReps cache; suppress unused warning
   // "Fruit Machine Spun" is repurposed as "free spin used".
   const freeSpinAvailable =
     (participant?.fields as Record<string, unknown> | undefined)?.[

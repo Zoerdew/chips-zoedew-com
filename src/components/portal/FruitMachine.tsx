@@ -203,12 +203,7 @@ export function FruitMachine({
           The fruit machine unlocks at 7pm on 29 June, live at the party.
         </p>
       )}
-      {unlocked && !eligible && (
-        <p className="text-body" style={{ marginTop: 16 }}>
-          You need 100 logged minutes to spin. The machine is for people who
-          went the distance.
-        </p>
-      )}
+      {/* Eligibility gate removed: anyone with 10 chips can spin. */}
       {error && (
         <div
           role="alert"

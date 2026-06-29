@@ -6,7 +6,6 @@ import {
   createChipEvent,
   findBetParticipantById,
   getBetParticipantStats,
-  sumBetReps,
   updateBetParticipant,
 } from "@/lib/airtable";
 import { isFruitMachineUnlocked } from "@/lib/betTiming";
@@ -15,7 +14,6 @@ import { CAPPED_PRIZES, rollFruitMachine } from "@/config/fruitMachinePrizes";
 export const runtime = "nodejs";
 
 const SPIN_COST = 10;
-const HIT_100 = 100;
 
 export async function POST() {
   // --- Auth ---
@@ -33,17 +31,8 @@ export async function POST() {
     );
   }
 
-  // --- Eligibility: must have hit 100 minutes ---
-  const { minutes } = await sumBetReps(session.participantId);
-  if (minutes < HIT_100) {
-    return NextResponse.json(
-      {
-        ok: false,
-        error: `You need 100 minutes to spin. You've logged ${minutes}.`,
-      },
-      { status: 403 }
-    );
-  }
+  // Eligibility note: no 100-minute requirement. Anyone with 10 chips can
+  // spin. The free-spin-for-100-minute-hitters logic still applies below.
 
   // --- Read participant: name + whether the free spin is still available ---
   const participant = await findBetParticipantById(session.participantId);
